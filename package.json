@@ -1,0 +1,23 @@
+{
+  "name": "postman-testing",
+  "version": "1.0.0",
+  "description": "backend postman automation",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx newman run './APP_TEST/test/backendAPI/collection/Todoist test.postman_collection.json' -e './APP_TEST/test/backendAPI/envVariables/QA.postman_environment.json' -r htmlextra --reporter-htmlextra-export './APP_TEST/test/backendAPI/reports/reporte.html'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaarla/postman-testing.git"
+  },
+  "author": "kaarla",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaarla/postman-testing/issues"
+  },
+  "homepage": "https://github.com/kaarla/postman-testing#readme",
+  "dependencies": {
+    "newman": "^5.2.2",
+    "newman-reporter-htmlextra": "^1.20.1"
+  }
+}

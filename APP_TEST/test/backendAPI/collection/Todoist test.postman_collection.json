@@ -51,9 +51,12 @@
 									"raw": "{\n    \"name\": \"{{projectName}}\"\n}"
 								},
 								"url": {
-									"raw": "{{baseURL}}",
+									"raw": "{{baseURL}}/projects",
 									"host": [
 										"{{baseURL}}"
+									],
+									"path": [
+										"projects"
 									]
 								}
 							},
@@ -85,11 +88,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseURL}}/{{projectId}}",
+									"raw": "{{baseURL}}/projects/{{projectId}}",
 									"host": [
 										"{{baseURL}}"
 									],
 									"path": [
+										"projects",
 										"{{projectId}}"
 									]
 								}
@@ -134,11 +138,12 @@
 									"raw": "{\n    \"name\": \"Updated\"\n}"
 								},
 								"url": {
-									"raw": "{{baseURL}}/{{projectId}}",
+									"raw": "{{baseURL}}/projects/{{projectId}}",
 									"host": [
 										"{{baseURL}}"
 									],
 									"path": [
+										"projects",
 										"{{projectId}}"
 									]
 								}
@@ -167,12 +172,265 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{baseURL}}/{{projectId}}",
+									"raw": "{{baseURL}}/projects/{{projectId}}",
 									"host": [
 										"{{baseURL}}"
 									],
 									"path": [
+										"projects",
 										"{{projectId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Tasks",
+			"item": [
+				{
+					"name": "Create task",
+					"item": [
+						{
+							"name": "Create a new task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Task due is correct\", function () {",
+											"    var name = pm.environment.get(\"taskDue\");",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.due.string).to.include('00:00');",
+											"});",
+											"",
+											"pm.environment.set(\"taskId\", jsonData.id);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "X-Requested-Id",
+										"type": "text",
+										"value": "$(uuidgen)"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"buy milk\",\n    \"due_string\": \"{{taskDue}}\",\n    \"due_lang\": \"en\",\n    \"priority\": 2\n}"
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Update task",
+					"item": [
+						{
+							"name": "Update a task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "X-Requested-Id",
+										"type": "text",
+										"value": "$(uuidgen)"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"due_string\": \"tomorrow 00:00\",\n    \"priority\": 3\n}"
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks/{{taskId}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks",
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get task",
+					"item": [
+						{
+							"name": "Get active task",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get an active task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Task due is correct\", function () {",
+											"    var name = pm.environment.get(\"taskDue\");",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.due.string).to.include('00:00');",
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Task due is correct\", function () {",
+											"    var name = pm.environment.get(\"taskDue\");",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.due.string).to.include('tomorrow');",
+											"    pm.expect(jsonData.priority).to.eql(3);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/tasks/{{taskId}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks",
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Close task",
+					"item": [
+						{
+							"name": "Close task",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/tasks/{{taskId}}/close",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks",
+										"{{taskId}}",
+										"close"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Reopen task",
+					"item": [
+						{
+							"name": "Reopen task",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/tasks/{{taskId}}/reopen",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks",
+										"{{taskId}}",
+										"reopen"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Delete task",
+					"item": [
+						{
+							"name": "Delete task",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/tasks/{{taskId}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks",
+										"{{taskId}}"
 									]
 								}
 							},

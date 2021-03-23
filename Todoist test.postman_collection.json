@@ -18,10 +18,6 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 2xx\", function () {",
-											"    pm.response.to.be.success;",
-											"});",
-											"",
 											"var jsonData = pm.response.json();",
 											"pm.test(\"Project name is correct\", function () {",
 											"    var name = pm.environment.get(\"projectName\");",
@@ -75,12 +71,10 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 2xx\", function () {",
-											"    pm.response.to.be.success;",
-											"});",
+											"var id = pm.environment.get(\"projectId\");",
 											"pm.test(\"Project ID is correct\", function () {",
 											"    var jsonData = pm.response.json();",
-											"    pm.expect(jsonData.id).to.eql(2261459217);",
+											"    pm.expect(jsonData.id).to.eql(id);",
 											"});"
 										],
 										"type": "text/javascript"
@@ -91,28 +85,18 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://api.todoist.com/rest/v1/projects/2261459217",
-									"protocol": "https",
+									"raw": "{{baseURL}}/{{projectId}}",
 									"host": [
-										"api",
-										"todoist",
-										"com"
+										"{{baseURL}}"
 									],
 									"path": [
-										"rest",
-										"v1",
-										"projects",
-										"2261459217"
+										"{{projectId}}"
 									]
 								}
 							},
 							"response": []
 						}
 					]
-				},
-				{
-					"name": "Create Project",
-					"item": []
 				},
 				{
 					"name": "Update Project",
@@ -124,9 +108,7 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 2xx\", function () {",
-											"    pm.response.to.be.success;",
-											"});",
+											"",
 											""
 										],
 										"type": "text/javascript"
@@ -134,7 +116,7 @@
 								}
 							],
 							"request": {
-								"method": "PUT",
+								"method": "POST",
 								"header": [
 									{
 										"key": "Content-Type",
@@ -152,18 +134,12 @@
 									"raw": "{\n    \"name\": \"Updated\"\n}"
 								},
 								"url": {
-									"raw": "https://api.todoist.com/rest/v1/projects/2261459217",
-									"protocol": "https",
+									"raw": "{{baseURL}}/{{projectId}}",
 									"host": [
-										"api",
-										"todoist",
-										"com"
+										"{{baseURL}}"
 									],
 									"path": [
-										"rest",
-										"v1",
-										"projects",
-										"2261459217"
+										"{{projectId}}"
 									]
 								}
 							},
@@ -181,9 +157,7 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.be.success;",
-											"});"
+											""
 										],
 										"type": "text/javascript"
 									}
@@ -193,18 +167,12 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "https://api.todoist.com/rest/v1/projects/2261459217",
-									"protocol": "https",
+									"raw": "{{baseURL}}/{{projectId}}",
 									"host": [
-										"api",
-										"todoist",
-										"com"
+										"{{baseURL}}"
 									],
 									"path": [
-										"rest",
-										"v1",
-										"projects",
-										"2261459217"
+										"{{projectId}}"
 									]
 								}
 							},
@@ -245,7 +213,9 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					""
+					"pm.test(\"Status code is 2xx\", function () {",
+					"    pm.response.to.be.success;",
+					"});"
 				]
 			}
 		}

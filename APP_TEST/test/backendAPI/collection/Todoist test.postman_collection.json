@@ -186,10 +186,32 @@
 						}
 					]
 				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 2xx\", function () {",
+							"    pm.response.to.be.success;",
+							"});"
+						]
+					}
+				}
 			]
 		},
 		{
-			"name": "Tasks",
+			"name": "Tasks positive cases",
 			"item": [
 				{
 					"name": "Create task",
@@ -209,7 +231,278 @@
 											"});",
 											"",
 											"pm.environment.set(\"taskId\", jsonData.id);",
-											""
+											"",
+											"var schema = {",
+											"    \"items\": {",
+											"        \"type\": \"boolean\"",
+											"    }",
+											"};",
+											"",
+											"const schemaCreate = {",
+											"    \"$schema\": \"http://json-schema.org/draft-07/schema\",",
+											"    \"$id\": \"http://example.com/example.json\",",
+											"    \"type\": \"object\",",
+											"    \"title\": \"The root schema\",",
+											"    \"description\": \"The root schema comprises the entire JSON document.\",",
+											"    \"default\": {},",
+											"    \"examples\": [",
+											"        {",
+											"            \"id\": 4682621684,",
+											"            \"assigner\": 0,",
+											"            \"project_id\": 2261456675,",
+											"            \"section_id\": 0,",
+											"            \"order\": 11,",
+											"            \"content\": \"buy milk\",",
+											"            \"completed\": false,",
+											"            \"label_ids\": [],",
+											"            \"priority\": 2,",
+											"            \"comment_count\": 0,",
+											"            \"creator\": 33140114,",
+											"            \"created\": \"2021-03-23T08:23:02Z\",",
+											"            \"due\": {",
+											"                \"recurring\": false,",
+											"                \"string\": \"today at 00:00\",",
+											"                \"date\": \"2021-03-23\",",
+											"                \"datetime\": \"2021-03-23T06:00:00Z\",",
+											"                \"timezone\": \"America/Mexico_City\"",
+											"            },",
+											"            \"url\": \"https://todoist.com/showTask?id=4682621684\"",
+											"        }",
+											"    ],",
+											"    \"required\": [",
+											"        \"id\",",
+											"        \"assigner\",",
+											"        \"project_id\",",
+											"        \"section_id\",",
+											"        \"order\",",
+											"        \"content\",",
+											"        \"completed\",",
+											"        \"label_ids\",",
+											"        \"priority\",",
+											"        \"comment_count\",",
+											"        \"creator\",",
+											"        \"created\",",
+											"        \"due\",",
+											"        \"url\"",
+											"    ],",
+											"    \"properties\": {",
+											"        \"id\": {",
+											"            \"$id\": \"#/properties/id\",",
+											"            \"type\": \"integer\",",
+											"            \"title\": \"The id schema\",",
+											"            \"description\": \"An explanation about the purpose of this instance.\",",
+											"            \"default\": 0,",
+											"            \"examples\": [",
+											"                4682621684",
+											"            ]",
+											"        },",
+											"        \"assigner\": {",
+											"            \"$id\": \"#/properties/assigner\",",
+											"            \"type\": \"integer\",",
+											"            \"title\": \"The assigner schema\",",
+											"            \"description\": \"An explanation about the purpose of this instance.\",",
+											"            \"default\": 0,",
+											"            \"examples\": [",
+											"                0",
+											"            ]",
+											"        },",
+											"        \"project_id\": {",
+											"            \"$id\": \"#/properties/project_id\",",
+											"            \"type\": \"integer\",",
+											"            \"title\": \"The project_id schema\",",
+											"            \"description\": \"An explanation about the purpose of this instance.\",",
+											"            \"default\": 0,",
+											"            \"examples\": [",
+											"                2261456675",
+											"            ]",
+											"        },",
+											"        \"section_id\": {",
+											"            \"$id\": \"#/properties/section_id\",",
+											"            \"type\": \"integer\",",
+											"            \"title\": \"The section_id schema\",",
+											"            \"description\": \"An explanation about the purpose of this instance.\",",
+											"            \"default\": 0,",
+											"            \"examples\": [",
+											"                0",
+											"            ]",
+											"        },",
+											"        \"order\": {",
+											"            \"$id\": \"#/properties/order\",",
+											"            \"type\": \"integer\",",
+											"            \"title\": \"The order schema\",",
+											"            \"description\": \"An explanation about the purpose of this instance.\",",
+											"            \"default\": 0,",
+											"            \"examples\": [",
+											"                11",
+											"            ]",
+											"        },",
+											"        \"content\": {",
+											"            \"$id\": \"#/properties/content\",",
+											"            \"type\": \"string\",",
+											"            \"title\": \"The content schema\",",
+											"            \"description\": \"An explanation about the purpose of this instance.\",",
+											"            \"default\": \"\",",
+											"            \"examples\": [",
+											"                \"buy milk\"",
+											"            ]",
+											"        },",
+											"        \"completed\": {",
+											"            \"$id\": \"#/properties/completed\",",
+											"            \"type\": \"boolean\",",
+											"            \"title\": \"The completed schema\",",
+											"            \"description\": \"An explanation about the purpose of this instance.\",",
+											"            \"default\": false,",
+											"            \"examples\": [",
+											"                false",
+											"            ]",
+											"        },",
+											"        \"label_ids\": {",
+											"            \"$id\": \"#/properties/label_ids\",",
+											"            \"type\": \"array\",",
+											"            \"title\": \"The label_ids schema\",",
+											"            \"description\": \"An explanation about the purpose of this instance.\",",
+											"            \"default\": [],",
+											"            \"examples\": [",
+											"                []",
+											"            ],",
+											"            \"additionalItems\": true,",
+											"            \"items\": {",
+											"                \"$id\": \"#/properties/label_ids/items\"",
+											"            }",
+											"        },",
+											"        \"priority\": {",
+											"            \"$id\": \"#/properties/priority\",",
+											"            \"type\": \"integer\",",
+											"            \"title\": \"The priority schema\",",
+											"            \"description\": \"An explanation about the purpose of this instance.\",",
+											"            \"default\": 0,",
+											"            \"examples\": [",
+											"                2",
+											"            ]",
+											"        },",
+											"        \"comment_count\": {",
+											"            \"$id\": \"#/properties/comment_count\",",
+											"            \"type\": \"integer\",",
+											"            \"title\": \"The comment_count schema\",",
+											"            \"description\": \"An explanation about the purpose of this instance.\",",
+											"            \"default\": 0,",
+											"            \"examples\": [",
+											"                0",
+											"            ]",
+											"        },",
+											"        \"creator\": {",
+											"            \"$id\": \"#/properties/creator\",",
+											"            \"type\": \"integer\",",
+											"            \"title\": \"The creator schema\",",
+											"            \"description\": \"An explanation about the purpose of this instance.\",",
+											"            \"default\": 0,",
+											"            \"examples\": [",
+											"                33140114",
+											"            ]",
+											"        },",
+											"        \"created\": {",
+											"            \"$id\": \"#/properties/created\",",
+											"            \"type\": \"string\",",
+											"            \"title\": \"The created schema\",",
+											"            \"description\": \"An explanation about the purpose of this instance.\",",
+											"            \"default\": \"\",",
+											"            \"examples\": [",
+											"                \"2021-03-23T08:23:02Z\"",
+											"            ]",
+											"        },",
+											"        \"due\": {",
+											"            \"$id\": \"#/properties/due\",",
+											"            \"type\": \"object\",",
+											"            \"title\": \"The due schema\",",
+											"            \"description\": \"An explanation about the purpose of this instance.\",",
+											"            \"default\": {},",
+											"            \"examples\": [",
+											"                {",
+											"                    \"recurring\": false,",
+											"                    \"string\": \"today at 00:00\",",
+											"                    \"date\": \"2021-03-23\",",
+											"                    \"datetime\": \"2021-03-23T06:00:00Z\",",
+											"                    \"timezone\": \"America/Mexico_City\"",
+											"                }",
+											"            ],",
+											"            \"required\": [",
+											"                \"recurring\",",
+											"                \"string\",",
+											"                \"date\",",
+											"                \"datetime\",",
+											"                \"timezone\"",
+											"            ],",
+											"            \"properties\": {",
+											"                \"recurring\": {",
+											"                    \"$id\": \"#/properties/due/properties/recurring\",",
+											"                    \"type\": \"boolean\",",
+											"                    \"title\": \"The recurring schema\",",
+											"                    \"description\": \"An explanation about the purpose of this instance.\",",
+											"                    \"default\": false,",
+											"                    \"examples\": [",
+											"                        false",
+											"                    ]",
+											"                },",
+											"                \"string\": {",
+											"                    \"$id\": \"#/properties/due/properties/string\",",
+											"                    \"type\": \"string\",",
+											"                    \"title\": \"The string schema\",",
+											"                    \"description\": \"An explanation about the purpose of this instance.\",",
+											"                    \"default\": \"\",",
+											"                    \"examples\": [",
+											"                        \"today at 00:00\"",
+											"                    ]",
+											"                },",
+											"                \"date\": {",
+											"                    \"$id\": \"#/properties/due/properties/date\",",
+											"                    \"type\": \"string\",",
+											"                    \"title\": \"The date schema\",",
+											"                    \"description\": \"An explanation about the purpose of this instance.\",",
+											"                    \"default\": \"\",",
+											"                    \"examples\": [",
+											"                        \"2021-03-23\"",
+											"                    ]",
+											"                },",
+											"                \"datetime\": {",
+											"                    \"$id\": \"#/properties/due/properties/datetime\",",
+											"                    \"type\": \"string\",",
+											"                    \"title\": \"The datetime schema\",",
+											"                    \"description\": \"An explanation about the purpose of this instance.\",",
+											"                    \"default\": \"\",",
+											"                    \"examples\": [",
+											"                        \"2021-03-23T06:00:00Z\"",
+											"                    ]",
+											"                },",
+											"                \"timezone\": {",
+											"                    \"$id\": \"#/properties/due/properties/timezone\",",
+											"                    \"type\": \"string\",",
+											"                    \"title\": \"The timezone schema\",",
+											"                    \"description\": \"An explanation about the purpose of this instance.\",",
+											"                    \"default\": \"\",",
+											"                    \"examples\": [",
+											"                        \"America/Mexico_City\"",
+											"                    ]",
+											"                }",
+											"            },",
+											"            \"additionalProperties\": true",
+											"        },",
+											"        \"url\": {",
+											"            \"$id\": \"#/properties/url\",",
+											"            \"type\": \"string\",",
+											"            \"title\": \"The url schema\",",
+											"            \"description\": \"An explanation about the purpose of this instance.\",",
+											"            \"default\": \"\",",
+											"            \"examples\": [",
+											"                \"https://todoist.com/showTask?id=4682621684\"",
+											"            ]",
+											"        }",
+											"    },",
+											"    \"additionalProperties\": true",
+											"}",
+											"",
+											"pm.test(\"Validate create schema\", () =>{",
+											"    pm.response.to.have.jsonSchema(schema)",
+											"})"
 										],
 										"type": "text/javascript"
 									}
@@ -438,6 +731,336 @@
 						}
 					]
 				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 2xx\", function () {",
+							"    pm.response.to.be.success;",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Tasks negative cases",
+			"item": [
+				{
+					"name": "Create task",
+					"item": [
+						{
+							"name": "Create a new task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Not allowed to delete all tasks\", function () {",
+											"    pm.response.to.have.status(405);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "X-Requested-Id",
+										"type": "text",
+										"value": "$(uuidgen)"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"buy milk\",\n    \"due_string\": \"{{taskDue}}\",\n    \"due_lang\": \"en\",\n    \"priority\": 2\n}"
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Update task",
+					"item": [
+						{
+							"name": "Update a task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Bad request\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Unsupported priority value\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"Unsupported priority value\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "X-Requested-Id",
+										"type": "text",
+										"value": "$(uuidgen)"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"due_string\": \"tomorrow 00:00\",\n    \"priority\": 6\n}"
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks/{{taskId}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks",
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get task",
+					"item": [
+						{
+							"name": "Get active task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Cannot load many tasks at a time\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Empty content\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"Empty\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Not existent ids",
+					"item": [
+						{
+							"name": "Close task",
+							"item": [
+								{
+									"name": "Close task",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseURL}}/tasks/{{taskId}}/close",
+											"host": [
+												"{{baseURL}}"
+											],
+											"path": [
+												"tasks",
+												"{{taskId}}",
+												"close"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Reopen task",
+							"item": [
+								{
+									"name": "Reopen task",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseURL}}/tasks/-33333/reopen",
+											"host": [
+												"{{baseURL}}"
+											],
+											"path": [
+												"tasks",
+												"-33333",
+												"reopen"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Delete task",
+							"item": [
+								{
+									"name": "Delete task",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseURL}}/tasks/-1111",
+											"host": [
+												"{{baseURL}}"
+											],
+											"path": [
+												"tasks",
+												"-1111"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Get task",
+							"item": [
+								{
+									"name": "Get an active task",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseURL}}/tasks/-2344",
+											"host": [
+												"{{baseURL}}"
+											],
+											"path": [
+												"tasks",
+												"-2344"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Task doesn't exist\", function () {",
+									"    pm.response.to.be.notFound;",
+									"});",
+									""
+								]
+							}
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
 			]
 		}
 	],
@@ -471,9 +1094,7 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"pm.test(\"Status code is 2xx\", function () {",
-					"    pm.response.to.be.success;",
-					"});"
+					""
 				]
 			}
 		}
